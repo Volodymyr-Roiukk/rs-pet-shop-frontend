@@ -29,8 +29,9 @@ export const cartSlice = createSlice({
       const {items} = state;
       const {payload: product} = action;
       const existingItem = items.find(i => i.product.id === product.id);
+
       if (existingItem) {
-        existingItem.count++;
+        existingItem.count < product.count && existingItem.count++;
         return;
       }
       items.push({product, count: 1});
@@ -54,13 +55,14 @@ export const cartSlice = createSlice({
 });
 
 export const addToCart = (product: Product) => async (dispatch: any, getState: any) => {
+  console.log('plus');
   dispatch(cartSlice.actions.addToCart(product));
   const { cart: { items } } = getState();
-  await axios.put(`${API_PATHS.cart}/profile/cart`, { items }, {
-    headers: {
-      Authorization: `Basic ${localStorage.getItem('authorization_token')}`,
-    },
-  })
+  // await axios.put(`${API_PATHS.cart}/profile/cart`, { items }, {
+  //   headers: {
+  //     Authorization: `Basic ${localStorage.getItem('authorization_token')}`,
+  //   },
+  // })
 };
 
 export const removeFromCart = (product: Product) => async (dispatch: any, getState: any) => {
