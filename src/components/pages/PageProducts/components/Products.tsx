@@ -35,13 +35,13 @@ export default function Products() {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    axios.get(API_PATHS.bff)
+    axios.get(API_PATHS.product)
       .then(res => setProducts(res.data));
   }, [])
 
   return (
     <Grid container spacing={4}>
-      {products.map((product: Product, index: number) => (
+      {products.map((product: Product) => (
         <Grid item key={product.id} xs={12} sm={6} md={4}>
           <Card className={classes.card}>
             <CardMedia
